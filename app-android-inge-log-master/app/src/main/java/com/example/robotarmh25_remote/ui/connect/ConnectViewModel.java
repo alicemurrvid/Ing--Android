@@ -5,15 +5,14 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class ConnectViewModel extends ViewModel {
-
-    private MutableLiveData<String> mText;
-
+    private static final String DEFAULT_TEXT = "This is home fragment";
+    private final MutableLiveData<String> textLiveData ;
     public ConnectViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        textLiveData  = new MutableLiveData<>();
+        textLiveData .setValue(DEFAULT_TEXT );
     }
-
+    // Public method for getting the LiveData object containing the text value
     public LiveData<String> getText() {
-        return mText;
+        return textLiveData ;
     }
 }

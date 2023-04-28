@@ -18,22 +18,22 @@ import android.widget.Toast;
 import com.example.robotarmh25_remote.BluetoothConnection;
 import com.example.robotarmh25_remote.DBHandler;
 import com.example.robotarmh25_remote.R;
-import com.example.robotarmh25_remote.data.RepositoryScenario.Scenario;
+import com.example.robotarmh25_remote.RepositoryScenario.Scenario;
 import com.example.robotarmh25_remote.ui.connect.ConnectFragment;
 
 import java.util.ArrayList;
 
 public class ConfigFragment extends Fragment {
-    BluetoothConnection btCon;
-    Context context;
-    View fragmentView;
-    ListView list;
-    Button enregistrer;
-    ImageButton left, right, lift, lower, close, open;
-    Scenario scenario;
-    ArrayList<String> affichage;
+   private  BluetoothConnection btCon;
+    private Context context;
+    private View fragmentView;
+    private ListView list;
+    private Button enregistrer;
+    private ImageButton left, right, lift, lower, close, open;
+    private Scenario scenario;
+    private ArrayList<String> affichage;
     private DBHandler dbHandler;
-    ArrayAdapter adapter;
+    private ArrayAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

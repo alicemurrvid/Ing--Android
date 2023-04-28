@@ -38,7 +38,7 @@ public class ConnectFragment extends Fragment {
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(!macAddressValide(macAddressText.getText().toString())) {
+                if(!macAddressValid(macAddressText.getText().toString())) {
                     macAddressText.setError("Format invalide");
                 } else {
                     SharedPreferences.Editor speditor = sp.edit();
@@ -48,7 +48,7 @@ public class ConnectFragment extends Fragment {
                     Toast.makeText(context, "Adresse MAC "+macAddressText.getText().toString()+" enregistrée", Toast.LENGTH_SHORT).show();
                     btCon = new BluetoothConnection();
                     SharedPreferences sp = context.getSharedPreferences(getString(R.string.MyPrefs), Context.MODE_PRIVATE);
-                    if(!btCon.initBT()){
+                    if(!btCon.initBluetooth()){
                         Toast.makeText(context, "Veuillez activer le bluetooth de votre téléphone", Toast.LENGTH_SHORT).show();
                     }
 
@@ -62,7 +62,9 @@ public class ConnectFragment extends Fragment {
         return root;
     }
 
-    private boolean macAddressValide(String macAddress) {
-        return macAddress.length() == 17;
+    // Validate the MAC address format
+    private boolean macAddressValid(String macAddress) {
+        String macPattern = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$";
+        return macAddress.length() == 17 && macAddress.matches(macPattern);
     }
 }

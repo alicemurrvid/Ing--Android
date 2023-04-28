@@ -19,10 +19,8 @@ import com.example.robotarmh25_remote.ui.connect.ConnectFragment;
 public class RemoteFragment extends Fragment {
 
     private RemoteViewModel remoteViewModel;
-
-    BluetoothConnection btCon;
-
-    Context context;
+    private BluetoothConnection btCon;
+    private Context context;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
