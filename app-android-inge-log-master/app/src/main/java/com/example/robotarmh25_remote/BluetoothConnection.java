@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 public class BluetoothConnection {
     private static final String SPP_UUID = "00001101-0000-1000-8000-00805F9B34FB";
-
+    //pejdoldlnds
     BluetoothAdapter localAdapter;
     BluetoothSocket socket_ev3_1, socket_nxt2;
     boolean success=false;
