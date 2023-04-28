@@ -1,22 +1,19 @@
 package com.example.robotarmh25_remote.ui.remote;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.robotarmh25_remote.R;
 import com.example.robotarmh25_remote.BluetoothConnection;
+import com.example.robotarmh25_remote.R;
 import com.example.robotarmh25_remote.ui.connect.ConnectFragment;
 
 public class RemoteFragment extends Fragment {
@@ -35,24 +32,14 @@ public class RemoteFragment extends Fragment {
 
         context = this.getActivity();
 
-        btCon = new BluetoothConnection();
+        btCon = ConnectFragment.btCon;
 
-        SharedPreferences sp = context.getSharedPreferences(getString(R.string.MyPrefs), Context.MODE_PRIVATE);
-
-        if(!btCon.initBT()){
-            Toast.makeText(context, "Veuillez activer le bluetooth de votre téléphone", Toast.LENGTH_SHORT).show();
-        }
-
-        if(!btCon.connectToEV3(sp.getString(getString(R.string.EV3KEY), ""))){
-            Toast.makeText(context, "Veuillez vous connecter à votre EV3", Toast.LENGTH_SHORT).show();
-        }
-
-        final Switch switchRotationAntiHoraire = (Switch) root.findViewById(R.id.switchRotationAntiHoraire);
-        final Switch switchRotationHoraire = (Switch) root.findViewById(R.id.switchRotationHoraire);
-        final Switch switchLever = (Switch) root.findViewById(R.id.switchLever);
-        final Switch switchBaisser = (Switch) root.findViewById(R.id.switchBaisser);
-        final Switch switchOuvrir = (Switch) root.findViewById(R.id.switchOuvrir);
-        final Switch switchFermer = (Switch) root.findViewById(R.id.switchFermer);
+        final Switch switchRotationAntiHoraire = (Switch) root.findViewById(R.id.afficherRotationAntiHoraire);
+        final Switch switchRotationHoraire = (Switch) root.findViewById(R.id.afficherRotationHoraire);
+        final Switch switchLever = (Switch) root.findViewById(R.id.afficherLever);
+        final Switch switchBaisser = (Switch) root.findViewById(R.id.afficherBaisser);
+        final Switch switchOuvrir = (Switch) root.findViewById(R.id.afficherOuvrir);
+        final Switch switchFermer = (Switch) root.findViewById(R.id.afficherFermer);
 
         switchRotationAntiHoraire.setOnClickListener(new View.OnClickListener() {
             @Override

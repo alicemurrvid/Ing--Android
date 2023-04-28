@@ -17,6 +17,10 @@
     <string name="ouvrir_pince">Ouvrir pince</string>
     <string name="fermer_pince">Fermer pince</string>
 
+    <string name="actions">Actions (maximum 5)</string>
+
     <string name="menu_connect">Connexion au robot</string>
     <string name="menu_remote">Télécommande</string>
+    <string name="menu_config">Configuration</string>
+
 </resources>
