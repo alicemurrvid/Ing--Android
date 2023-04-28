@@ -24,38 +24,51 @@ import android.widget.Toast;
 
 public class BluetoothConnection {
     private static final String SPP_UUID = "00001101-0000-1000-8000-00805F9B34FB";
-
-    BluetoothAdapter localAdapter;
-    BluetoothSocket socket_ev3_1, socket_nxt2;
-    boolean success=false;
-    private boolean btPermission=false;
+    private BluetoothAdapter bluetoothAdapter;
+    private BluetoothSocket socket_ev3_1, socket_nxt2;
+    private boolean success=false;
+    private boolean bluetoothPermission = false;
     private boolean alertReplied=false;
 
-    public void reply(){this.alertReplied = true;}
-    public void setBtPermission(boolean btPermission) {
-        this.btPermission = btPermission;
+    /**
+     Setter method to set the Bluetooth permission.
+     @param bluetoothPermission boolean value indicating if Bluetooth permission is granted or not
+     */
+    public void setBluetoothPermission(boolean bluetoothPermission) {
+        this.bluetoothPermission = bluetoothPermission;
     }
 
-    public boolean initBT(){
-        localAdapter=BluetoothAdapter.getDefaultAdapter();
-        return localAdapter.isEnabled();
+    /**
+     Setter method to set the alert replied flag.
+     @param alertReplied boolean value indicating if alert has been replied or not
+     */
+    public void setAlertReplied(boolean alertReplied) {
+        this.alertReplied = alertReplied;
+    }
+    /**
+     Initializes the Bluetooth adapter and returns if Bluetooth is enabled.
+     @return true if Bluetooth is enabled, false otherwise
+     */
+    public boolean initBluetooth(){
+        bluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
+        return bluetoothAdapter.isEnabled();
     }
 
     //Enables Bluetooth if not enabled
     // Modified to ask permission and show a toast
     /*public boolean enableBT(AlertDialog alert, Toast toast){
-        localAdapter=BluetoothAdapter.getDefaultAdapter();
+        bluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
         //If Bluetooth not enable then do it
-        if(localAdapter.isEnabled()==false){
+        if(bluetoothAdapter.isEnabled()==false){
             alert.show();
             while(!alertReplied){}
-            if(btPermission) {
-                localAdapter.enable();
+            if(bluetoothPermission ) {
+                bluetoothAdapter.enable();
             } else {
                 return false;
             }
 
-            while(!(localAdapter.isEnabled())){
+            while(!(.bluetoothAdapter.isEnabled())){
 
             }
 
@@ -67,91 +80,70 @@ public class BluetoothConnection {
 
     }*/
 
-    //connect to both NXTs
+    /**
+     Attempts to connect to an EV3 device with the given MAC address.
+     @param macAdd the MAC address of the EV3 device
+     @return true if the connection is successful, false otherwise
+     */
     public  boolean connectToEV3(String macAdd){
-
-
-
         //get the BluetoothDevice of the EV3
-        //BluetoothDevice nxt_2 = localAdapter.getRemoteDevice(nxt2);
-        BluetoothDevice ev3_1 = localAdapter.getRemoteDevice(macAdd);
+        //BluetoothDevice nxt_2 = bluetoothAdapter.getRemoteDevice(nxt2);
+        BluetoothDevice ev3Device= bluetoothAdapter.getRemoteDevice(macAdd);
         //try to connect to the nxt
         try {
-
-
-            socket_ev3_1 = ev3_1.createRfcommSocketToServiceRecord(UUID
+            socket_ev3_1 = ev3Device.createRfcommSocketToServiceRecord(UUID
                     .fromString(SPP_UUID));
-
-
-
-
             socket_ev3_1.connect();
-
-
             success = true;
-
-
-
         } catch (IOException e) {
             Log.d("Bluetooth","Err: Device not found or cannot connect " + macAdd);
             success=false;
-
-
         }
         return success;
-
     }
 
-
+    /**
+     Sends a message to the connected EV3 brick.
+     @param msg a byte representing the message to be sent
+     @throws InterruptedException if the thread is interrupted while waiting
+     */
     public void writeMessage(byte msg) throws InterruptedException{
-        BluetoothSocket connSock;
 
-
-        connSock= socket_ev3_1;
-
-        if(connSock!=null){
+        if(socket_ev3_1!=null){
             try {
-
-                OutputStreamWriter out=new OutputStreamWriter(connSock.getOutputStream());
-                out.write(msg);
-                out.flush();
-
+                OutputStreamWriter outputStreamWriter =new OutputStreamWriter(socket_ev3_1.getOutputStream());
+                outputStreamWriter.write(msg);
+                outputStreamWriter.flush();
                 Thread.sleep(1000);
-
-
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }else{
             //Error
         }
     }
-
-    // Note: Not needed for the current program
-    public int readMessage(String nxt){
+    /**
+     Reads a message from the specified Bluetooth socket.
+     @param socketName The name of the socket to read from ("nxt2" or "nxt1").
+     @return The integer value of the read message, or -1 if an error occurred.
+     */
+    public int readMessage(String socketName){
         BluetoothSocket connSock;
         int n;
         //Swith nxt socket
-        if(nxt.equals("nxt2")){
+        if(socketName.equals("nxt2")){
             connSock=socket_nxt2;
-        }else if(nxt.equals("nxt1")){
+        }else if(socketName.equals("nxt1")){
             connSock= socket_ev3_1;
         }else{
             connSock=null;
         }
-
         if(connSock!=null){
             try {
-
                 InputStreamReader in=new InputStreamReader(connSock.getInputStream());
                 n=in.read();
-
                 return n;
-
-
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
                 return -1;
             }
@@ -159,7 +151,6 @@ public class BluetoothConnection {
             //Error
             return -1;
         }
-
     }
 
 }

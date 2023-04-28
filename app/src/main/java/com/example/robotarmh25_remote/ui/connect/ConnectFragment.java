@@ -16,12 +16,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.robotarmh25_remote.R;
 
+
+/*
+*This code defines a fragment that allows the user to enter and save a Bluetooth MAC address.
+* The fragment inflates a layout file, sets up a ViewModel, and retrieves shared preferences.
+* The user's input is validated before being saved to shared preferences.
+ */
 public class ConnectFragment extends Fragment {
 
     private ConnectViewModel connectViewModel;
-
     Context context;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -37,22 +41,21 @@ public class ConnectFragment extends Fragment {
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(!macAddressValide(macAddressText.getText().toString())) {
+                if(!macAddressValid(macAddressText.getText().toString())) {
                     macAddressText.setError("Format invalide");
                 } else {
                     SharedPreferences.Editor speditor = sp.edit();
                     speditor.putString(getString(R.string.EV3KEY), macAddressText.getText().toString());
                     speditor.commit();
-
                     Toast.makeText(context, "Adresse MAC "+macAddressText.getText().toString()+" enregistrée", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
         return root;
     }
-
-    private boolean macAddressValide(String macAddress) {
-        return macAddress.length() == 17;
+    // Validate the MAC address format
+    private boolean macAddressValid(String macAddress) {
+        String macPattern = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$";
+        return macAddress.length() == 17 && macAddress.matches(macPattern);
     }
 }

@@ -32,14 +32,13 @@ public class RemoteFragment extends Fragment {
         remoteViewModel =
                 new ViewModelProvider(this).get(RemoteViewModel.class);
         View root = inflater.inflate(R.layout.fragment_remote, container, false);
-
         context = this.getActivity();
 
         btCon = new BluetoothConnection();
 
         SharedPreferences sp = context.getSharedPreferences(getString(R.string.MyPrefs), Context.MODE_PRIVATE);
 
-        if(!btCon.initBT()){
+        if(!btCon.initBluetooth()){
             Toast.makeText(context, "Veuillez activer le bluetooth de votre téléphone", Toast.LENGTH_SHORT).show();
         }
 
