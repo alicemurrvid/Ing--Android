@@ -1,8 +1,9 @@
-package com.example.robotarmh25_remote.data.RepositoryScenario;
+package com.example.robotarmh25_remote.RepositoryScenario;
 
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Scenario {
     private ArrayList<TypeTask> tasks = new ArrayList<TypeTask>();
@@ -35,6 +36,13 @@ public class Scenario {
     public void addTask(TypeTask task){
         try {
             tasks.add(task);
+        } catch (Exception e){
+            Log.e("Bluetooth", e.getMessage());
+        }
+    }
+    public void addListTask(List<TypeTask> tasks){
+        try {
+            this.tasks.addAll(tasks);
         } catch (Exception e){
             Log.e("Bluetooth", e.getMessage());
         }
