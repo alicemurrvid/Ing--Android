@@ -6,9 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.robotarmh25_remote.data.RepositoryScenario.Scenario;
+import com.example.robotarmh25_remote.RepositoryScenario.Scenario;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class DBHandler extends SQLiteOpenHelper {
@@ -77,22 +78,13 @@ public class DBHandler extends SQLiteOpenHelper {
         // on below line we are passing all values
         // along with its key and value pair.
         for (int i = 0; i<5; i++) {
-            Log.e("Bluetooth", (i+1)>actions.nbTasks()?"non":"oiu");
             if ((i+1)>actions.nbTasks()) {
                 values.put("action"+(i+1), "NULL");
-                Log.e("Bluetooth", values.toString());
             }
             else {
                 values.put("action"+(i+1), actions.getTask(i).toString());
-                Log.e("Bluetooth", values.toString());
             }
         }
-        Log.e("Bluetooth", values.toString());
-/*        values.put(ACTION1_COL, actions.getTask(0).getTaskType().toString());
-        values.put(ACTION2_COL, actions.getTask(1).getTaskType().toString());
-        values.put(ACTION3_COL, actions.getTask(2).getTaskType().toString());
-        values.put(ACTION4_COL, actions.getTask(3).getTaskType().toString());
-        values.put(ACTION5_COL, actions.getTask(4).getTaskType().toString());*/
         // after adding all values we are passing
         // content values to our table.
         db.insert(TABLE_NAME, null, values);
@@ -125,10 +117,20 @@ public class DBHandler extends SQLiteOpenHelper {
             String col3 = res.getString(res.getColumnIndex(ACTION3_COL));
             String col4 = res.getString(res.getColumnIndex(ACTION4_COL));
             String col5 = res.getString(res.getColumnIndex(ACTION5_COL));
-            scenario.add(col1+", "+col2+", "+col3+", "+col4+", "+col5);
+            scenario.addAll(Arrays.asList(col1,col2,col3,col4,col5));
             result.put(id, scenario);
             res.moveToNext();
         }
         return result;
+    }
+
+    public void deleteData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, null, null);
+    }
+
+    public void deleteData(int i) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, ID_COL + "="+i, null);
     }
 }

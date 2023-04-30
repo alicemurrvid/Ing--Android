@@ -19,6 +19,13 @@
 
     <string name="actions">Actions (maximum 5)</string>
 
+    <string name="scénario1">Scénario 1</string>
+    <string name="scénario2">Scénario 2</string>
+    <string name="scénarioBasique">Scénarios basiques</string>
+    <string name="scénarioEnregistrés">Scénarios enregistrés</string>
+    <string name="exec">Executer</string>
+    <string name="delete">Supprimer</string>
+
     <string name="menu_connect">Connexion au robot</string>
     <string name="menu_remote">Télécommande</string>
     <string name="menu_config">Configuration</string>

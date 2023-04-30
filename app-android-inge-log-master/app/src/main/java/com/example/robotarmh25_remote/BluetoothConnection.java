@@ -25,7 +25,7 @@ import android.widget.Toast;
 public class BluetoothConnection {
     private static final String SPP_UUID = "00001101-0000-1000-8000-00805F9B34FB";
     private BluetoothAdapter bluetoothAdapter;
-    private BluetoothSocket socket_ev3_1, socket_nxt2;
+    private BluetoothSocket socket_ev3_1;
     private boolean success=false;
     private boolean bluetoothPermission = false;
     private boolean alertReplied=false;
@@ -93,25 +93,18 @@ public class BluetoothConnection {
                 e.printStackTrace();
             }
         }else{
-            //Error
+            Log.e("ok","peut pas écrire");
         }
     }
     /**
      Reads a message from the specified Bluetooth socket.
-     @param socketName The name of the socket to read from ("nxt2" or "nxt1").
      @return The integer value of the read message, or -1 if an error occurred.
      */
-    public int readMessage(String socketName){
+    public int readMessage(){
         BluetoothSocket connSock;
-        int n;
-        //Swith nxt socket
-        if(socketName.equals("nxt2")){
-            connSock=socket_nxt2;
-        }else if(socketName.equals("nxt1")){
-            connSock= socket_ev3_1;
-        }else{
-            connSock=null;
-        }
+        int n=0;
+        connSock= socket_ev3_1;
+
         if(connSock!=null){
             try {
                 InputStreamReader in=new InputStreamReader(connSock.getInputStream());
@@ -119,11 +112,11 @@ public class BluetoothConnection {
                 return n;
             } catch (IOException e) {
                 e.printStackTrace();
-                return -1;
+                return n;
             }
         }else{
             //Error
-            return -1;
+            return n;
         }
     }
 

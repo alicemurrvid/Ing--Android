@@ -22,6 +22,7 @@ import com.example.robotarmh25_remote.RepositoryScenario.Scenario;
 import com.example.robotarmh25_remote.ui.connect.ConnectFragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ConfigFragment extends Fragment {
    private  BluetoothConnection btCon;
