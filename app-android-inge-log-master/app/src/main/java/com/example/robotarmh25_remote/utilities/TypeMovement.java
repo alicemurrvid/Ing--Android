@@ -11,8 +11,8 @@ public enum TypeMovement {
 
 
     private String stringValue;
-    private final byte taskValue;
-    private final String message;
+    private  byte taskValue;
+    private  String message;
 
     TypeMovement(byte taskValue, String message) {
         this.taskValue = taskValue;
