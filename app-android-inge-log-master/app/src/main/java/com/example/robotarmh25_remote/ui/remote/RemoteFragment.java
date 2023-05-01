@@ -43,7 +43,7 @@ public class RemoteFragment extends Fragment {
         switchAntiClockwiseRotation .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(switchAntiClockwiseRotation .isChecked()) {
+              /*  if(switchAntiClockwiseRotation .isChecked()) {
                     try {
                         bluetoothConnection.writeMessage((byte) TypeMovement.LEFT.getTaskValue());
                     } catch (InterruptedException e) {
@@ -57,14 +57,15 @@ public class RemoteFragment extends Fragment {
                         e.printStackTrace();
                     }
                     Toast.makeText(context, "Arrêt rotation Antihoraire", Toast.LENGTH_SHORT).show();
-                }
+                }*/
+                performMovement(TypeMovement.ANTI_CLOCKWISE_ROTATION, switchAntiClockwiseRotation.isChecked());
             }
         });
 
         switchClockwiseRotation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(switchClockwiseRotation.isChecked()) {
+               /* if(switchClockwiseRotation.isChecked()) {
                     try {
                         bluetoothConnection.writeMessage((byte) 3);
                     } catch (InterruptedException e) {
@@ -78,14 +79,15 @@ public class RemoteFragment extends Fragment {
                         e.printStackTrace();
                     }
                     Toast.makeText(context, "Arrêt rotation Horaire", Toast.LENGTH_SHORT).show();
-                }
+                }*/
+                performMovement(TypeMovement.CLOCKWISE_ROTATION, switchClockwiseRotation.isChecked());
             }
         });
 
         switchLift .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(switchLift .isChecked()) {
+             /*   if(switchLift .isChecked()) {
                     try {
                         bluetoothConnection.writeMessage((byte)5);
                     } catch (InterruptedException e) {
@@ -99,14 +101,15 @@ public class RemoteFragment extends Fragment {
                         e.printStackTrace();
                     }
                     Toast.makeText(context, "Arrêt lever bras", Toast.LENGTH_SHORT).show();
-                }
+                }*/
+                performMovement(TypeMovement.LIFT, switchLift.isChecked());
             }
         });
 
         switchLower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if( switchLower.isChecked()) {
+              /*  if( switchLower.isChecked()) {
                     try {
                         bluetoothConnection.writeMessage((byte)7);
                     } catch (InterruptedException e) {
@@ -120,14 +123,15 @@ public class RemoteFragment extends Fragment {
                         e.printStackTrace();
                     }
                     Toast.makeText(context, "Arrêt baisser bras", Toast.LENGTH_SHORT).show();
-                }
+                }*/
+                performMovement(TypeMovement.LOWER, switchLower.isChecked());
             }
         });
 
         switchOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(switchOpen.isChecked()) {
+               /* if(switchOpen.isChecked()) {
                     try {
                         bluetoothConnection.writeMessage((byte)9);
                     } catch (InterruptedException e) {
@@ -141,14 +145,15 @@ public class RemoteFragment extends Fragment {
                         e.printStackTrace();
                     }
                     Toast.makeText(context, "Arrêt ouverture pince", Toast.LENGTH_SHORT).show();
-                }
+                }*/
+                performMovement(TypeMovement.OPEN, switchOpen.isChecked());
             }
         });
 
         switchClose .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(switchClose .isChecked()) {
+                /*if(switchClose .isChecked()) {
                     try {
                         bluetoothConnection.writeMessage((byte)11);
                     } catch (InterruptedException e) {
@@ -162,10 +167,27 @@ public class RemoteFragment extends Fragment {
                         e.printStackTrace();
                     }
                     Toast.makeText(context, "Arrêt fermeture pince", Toast.LENGTH_SHORT).show();
-                }
+                }*/
+                performMovement(TypeMovement.CLOSE, switchClose.isChecked());
             }
         });
 
         return root;
+    }
+    /**
+     Perform a movement based on the given TypeMovement and switch status.
+     @param typeMovement the TypeMovement to perform.
+     @param isChecked the status of the switch associated with the movement.
+     */
+    private void performMovement(TypeMovement typeMovement, boolean isChecked) {
+        byte taskValue = isChecked ? typeMovement.getTaskValue() : (byte)(typeMovement.getTaskValue() + 1);
+        try {
+            bluetoothConnection.writeMessage(taskValue);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        String message = isChecked ? "Démarrage " : "Arrêt ";
+        message += typeMovement.getMessage();
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }

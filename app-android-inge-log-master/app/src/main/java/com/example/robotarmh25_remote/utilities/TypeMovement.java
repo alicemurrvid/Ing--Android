@@ -1,18 +1,28 @@
 package com.example.robotarmh25_remote.utilities;
 
 public enum TypeMovement {
-    LEFT ("Left",1), RIGHT ("Right",3), LIFT ("Lift",5), LOWER ("Lower",7),
-    OPEN ("Open",9), CLOSE ("Close",11);
+
+    ANTI_CLOCKWISE_ROTATION((byte)1, "rotation Antihoraire"),
+    CLOCKWISE_ROTATION((byte)3, "rotation Horaire"),
+    LIFT((byte)5, "lever bras"),
+    LOWER((byte)7, "baisser bras"),
+    OPEN((byte)9, "ouverture pince"),
+    CLOSE((byte)11, "fermeture pince");
+
+
     private String stringValue;
-    private int intValue;
-    private TypeMovement(String toString, int value) {
-        stringValue = toString;
-        intValue = value;
+    private final byte taskValue;
+    private final String message;
+
+    TypeMovement(byte taskValue, String message) {
+        this.taskValue = taskValue;
+        this.message = message;
     }
 
-    @Override
-    public String toString() {
-        return stringValue;
+    public byte getTaskValue() {
+        return taskValue;
     }
-    public int getTaskValue(){return intValue;}
+    public String getMessage() {
+        return message;
+    }
 }
