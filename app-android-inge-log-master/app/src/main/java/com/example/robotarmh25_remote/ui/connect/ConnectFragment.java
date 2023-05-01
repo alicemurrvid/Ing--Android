@@ -63,7 +63,7 @@ public class ConnectFragment extends Fragment {
     }
 
     // Validate the MAC address format
-    private boolean macAddressValid(String macAddress) {
+    public boolean macAddressValid(String macAddress) {
         String macPattern = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$";
         return macAddress.length() == 17 && macAddress.matches(macPattern);
     }

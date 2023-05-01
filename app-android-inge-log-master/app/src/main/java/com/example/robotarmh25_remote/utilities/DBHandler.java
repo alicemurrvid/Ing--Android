@@ -133,4 +133,6 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, ID_COL + "="+i, null);
     }
+
+
 }
