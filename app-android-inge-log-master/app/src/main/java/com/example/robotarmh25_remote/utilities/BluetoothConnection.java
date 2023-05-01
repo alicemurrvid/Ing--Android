@@ -1,4 +1,4 @@
-package com.example.robotarmh25_remote;
+package com.example.robotarmh25_remote.utilities;
 
 /**
  * From http://stackoverflow.com/questions/4969053/bluetooth-connection-between-android-and-lego-mindstorm-nxt

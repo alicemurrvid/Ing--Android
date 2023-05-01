@@ -12,46 +12,47 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.robotarmh25_remote.BluetoothConnection;
+import com.example.robotarmh25_remote.utilities.BluetoothConnection;
 import com.example.robotarmh25_remote.R;
 import com.example.robotarmh25_remote.ui.connect.ConnectFragment;
+import com.example.robotarmh25_remote.utilities.TypeMovement;
 
 public class RemoteFragment extends Fragment {
 
     private RemoteViewModel remoteViewModel;
-    private BluetoothConnection btCon;
+    private BluetoothConnection bluetoothConnection;
     private Context context;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        remoteViewModel =
-                new ViewModelProvider(this).get(RemoteViewModel.class);
+
+        remoteViewModel = new ViewModelProvider(this).get(RemoteViewModel.class);
         View root = inflater.inflate(R.layout.fragment_remote, container, false);
-
         context = this.getActivity();
+        // Get the BluetoothConnection instance created in the ConnectFragment.
+        bluetoothConnection= ConnectFragment.bluetoothConnection;
 
-        btCon = ConnectFragment.btCon;
+        // Initialize Switch UI components.
+        final Switch switchAntiClockwiseRotation = (Switch) root.findViewById(R.id.afficherRotationAntiHoraire);
+        final Switch switchClockwiseRotation = (Switch) root.findViewById(R.id.afficherRotationHoraire);
+        final Switch switchLift  = (Switch) root.findViewById(R.id.afficherLever);
+        final Switch  switchLower = (Switch) root.findViewById(R.id.afficherBaisser);
+        final Switch switchOpen = (Switch) root.findViewById(R.id.afficherOuvrir);
+        final Switch switchClose  = (Switch) root.findViewById(R.id.afficherFermer);
 
-        final Switch switchRotationAntiHoraire = (Switch) root.findViewById(R.id.afficherRotationAntiHoraire);
-        final Switch switchRotationHoraire = (Switch) root.findViewById(R.id.afficherRotationHoraire);
-        final Switch switchLever = (Switch) root.findViewById(R.id.afficherLever);
-        final Switch switchBaisser = (Switch) root.findViewById(R.id.afficherBaisser);
-        final Switch switchOuvrir = (Switch) root.findViewById(R.id.afficherOuvrir);
-        final Switch switchFermer = (Switch) root.findViewById(R.id.afficherFermer);
-
-        switchRotationAntiHoraire.setOnClickListener(new View.OnClickListener() {
+        switchAntiClockwiseRotation .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(switchRotationAntiHoraire.isChecked()) {
+                if(switchAntiClockwiseRotation .isChecked()) {
                     try {
-                        btCon.writeMessage((byte) 1);
+                        bluetoothConnection.writeMessage((byte) TypeMovement.LEFT.getTaskValue());
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     Toast.makeText(context, "Démarrage rotation Antihoraire", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
-                        btCon.writeMessage((byte) 2);
+                        bluetoothConnection.writeMessage((byte) 2);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -60,19 +61,19 @@ public class RemoteFragment extends Fragment {
             }
         });
 
-        switchRotationHoraire.setOnClickListener(new View.OnClickListener() {
+        switchClockwiseRotation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(switchRotationHoraire.isChecked()) {
+                if(switchClockwiseRotation.isChecked()) {
                     try {
-                        btCon.writeMessage((byte) 3);
+                        bluetoothConnection.writeMessage((byte) 3);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     Toast.makeText(context, "Démarrage rotation Horaire", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
-                        btCon.writeMessage((byte) 4);
+                        bluetoothConnection.writeMessage((byte) 4);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -81,19 +82,19 @@ public class RemoteFragment extends Fragment {
             }
         });
 
-        switchLever.setOnClickListener(new View.OnClickListener() {
+        switchLift .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(switchLever.isChecked()) {
+                if(switchLift .isChecked()) {
                     try {
-                        btCon.writeMessage((byte)5);
+                        bluetoothConnection.writeMessage((byte)5);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     Toast.makeText(context, "Démarrage lever bras", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
-                        btCon.writeMessage((byte) 6);
+                        bluetoothConnection.writeMessage((byte) 6);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -102,19 +103,19 @@ public class RemoteFragment extends Fragment {
             }
         });
 
-        switchBaisser.setOnClickListener(new View.OnClickListener() {
+        switchLower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(switchBaisser.isChecked()) {
+                if( switchLower.isChecked()) {
                     try {
-                        btCon.writeMessage((byte)7);
+                        bluetoothConnection.writeMessage((byte)7);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     Toast.makeText(context, "Démarrage baisser bras", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
-                        btCon.writeMessage((byte) 8);
+                        bluetoothConnection.writeMessage((byte) 8);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -123,19 +124,19 @@ public class RemoteFragment extends Fragment {
             }
         });
 
-        switchOuvrir.setOnClickListener(new View.OnClickListener() {
+        switchOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(switchOuvrir.isChecked()) {
+                if(switchOpen.isChecked()) {
                     try {
-                        btCon.writeMessage((byte)9);
+                        bluetoothConnection.writeMessage((byte)9);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     Toast.makeText(context, "Démarrage ouverture pince", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
-                        btCon.writeMessage((byte) 10);
+                        bluetoothConnection.writeMessage((byte) 10);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -144,19 +145,19 @@ public class RemoteFragment extends Fragment {
             }
         });
 
-        switchFermer.setOnClickListener(new View.OnClickListener() {
+        switchClose .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(switchFermer.isChecked()) {
+                if(switchClose .isChecked()) {
                     try {
-                        btCon.writeMessage((byte)11);
+                        bluetoothConnection.writeMessage((byte)11);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     Toast.makeText(context, "Démarrage fermeture pince", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
-                        btCon.writeMessage((byte) 12);
+                        bluetoothConnection.writeMessage((byte) 12);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

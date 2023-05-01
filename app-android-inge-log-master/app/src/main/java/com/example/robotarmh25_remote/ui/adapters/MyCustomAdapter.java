@@ -1,7 +1,6 @@
-package com.example.robotarmh25_remote;
+package com.example.robotarmh25_remote.ui.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.robotarmh25_remote.R;
 import com.example.robotarmh25_remote.RepositoryScenario.Scenario;
 import com.example.robotarmh25_remote.ui.remote.autonomousFragment;
 
@@ -59,10 +59,10 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
         switchbtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(autonomousFragment.scenarioAJouer != null) {
+                if(autonomousFragment.scenarioToPlay  != null) {
                     if (!switchbtn.isChecked()){
-                        autonomousFragment.scenarioAJouer  = null;
-                        autonomousFragment.clé = 0;
+                        autonomousFragment.scenarioToPlay  = null;
+                        autonomousFragment.key = 0;
                     }
                     else {
                         Toast.makeText(context, "Vous ne pouvez lancer qu'un scénario à la fois", Toast.LENGTH_SHORT).show();
@@ -71,11 +71,11 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
                 }
                 else {
                     if (Character.compare(list.get(position).charAt(4), ',') != 0) {
-                        autonomousFragment.clé = Integer.parseInt(list.get(position).substring(3, 5));
-                        autonomousFragment.scenarioAJouer = new Scenario(new ArrayList<String>(Arrays.asList(list.get(position).substring(7).split(", "))), 1);
+                        autonomousFragment.key = Integer.parseInt(list.get(position).substring(3, 5));
+                        autonomousFragment.scenarioToPlay  = new Scenario(new ArrayList<String>(Arrays.asList(list.get(position).substring(7).split(", "))), 1);
                     } else {
-                        autonomousFragment.clé = Character.getNumericValue(list.get(position).charAt(3));
-                        autonomousFragment.scenarioAJouer = new Scenario(new ArrayList<String>(Arrays.asList(list.get(position).substring(6).split(", "))), 1);
+                        autonomousFragment.key = Character.getNumericValue(list.get(position).charAt(3));
+                        autonomousFragment.scenarioToPlay  = new Scenario(new ArrayList<String>(Arrays.asList(list.get(position).substring(6).split(", "))), 1);
                     }
                 }
             }

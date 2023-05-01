@@ -14,12 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.robotarmh25_remote.BluetoothConnection;
+import com.example.robotarmh25_remote.utilities.BluetoothConnection;
 import com.example.robotarmh25_remote.R;
 
 public class ConnectFragment extends Fragment {
 
-    public static BluetoothConnection btCon;
+    public static BluetoothConnection  bluetoothConnection;
     private ConnectViewModel connectViewModel;
     Context context;
 
@@ -31,7 +31,7 @@ public class ConnectFragment extends Fragment {
 
         context = this.getActivity();
 
-        final SharedPreferences sp = context.getSharedPreferences(getString(R.string.MyPrefs), Context.MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = context.getSharedPreferences(getString(R.string.MyPrefs), Context.MODE_PRIVATE);
 
         final Button button = (Button) root.findViewById(R.id.confirmConnectButton);
         final EditText macAddressText = (EditText) root.findViewById(R.id.textMacAddress);
@@ -41,18 +41,18 @@ public class ConnectFragment extends Fragment {
                 if(!macAddressValid(macAddressText.getText().toString())) {
                     macAddressText.setError("Format invalide");
                 } else {
-                    SharedPreferences.Editor speditor = sp.edit();
+                    SharedPreferences.Editor speditor = sharedPreferences .edit();
                     speditor.putString(getString(R.string.EV3KEY), macAddressText.getText().toString());
                     speditor.commit();
 
                     Toast.makeText(context, "Adresse MAC "+macAddressText.getText().toString()+" enregistrée", Toast.LENGTH_SHORT).show();
-                    btCon = new BluetoothConnection();
+                    bluetoothConnection= new BluetoothConnection();
                     SharedPreferences sp = context.getSharedPreferences(getString(R.string.MyPrefs), Context.MODE_PRIVATE);
-                    if(!btCon.initBluetooth()){
+                    if(! bluetoothConnection.initBluetooth()){
                         Toast.makeText(context, "Veuillez activer le bluetooth de votre téléphone", Toast.LENGTH_SHORT).show();
                     }
 
-                    if(!btCon.connectToEV3(sp.getString(getString(R.string.EV3KEY), ""))){
+                    if(! bluetoothConnection.connectToEV3(sp.getString(getString(R.string.EV3KEY), ""))){
                         Toast.makeText(context, "Veuillez vous connecter à votre EV3", Toast.LENGTH_SHORT).show();
                     }
                 }
