@@ -15,14 +15,13 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.robotarmh25_remote.BluetoothConnection;
-import com.example.robotarmh25_remote.DBHandler;
+import com.example.robotarmh25_remote.utilities.BluetoothConnection;
+import com.example.robotarmh25_remote.utilities.DBHandler;
 import com.example.robotarmh25_remote.R;
 import com.example.robotarmh25_remote.RepositoryScenario.Scenario;
 import com.example.robotarmh25_remote.ui.connect.ConnectFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ConfigFragment extends Fragment {
    private  BluetoothConnection btCon;
@@ -44,7 +43,7 @@ public class ConfigFragment extends Fragment {
         context = this.getActivity();
 
         //bluetooth connexion
-        btCon = ConnectFragment.btCon;
+        btCon = ConnectFragment.bluetoothConnection;
         //database
         dbHandler = new DBHandler(context);
 

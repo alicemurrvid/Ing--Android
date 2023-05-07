@@ -1,4 +1,4 @@
-package com.example.robotarmh25_remote;
+package com.example.robotarmh25_remote.utilities;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -205,5 +205,6 @@ public class DBHandler extends SQLiteOpenHelper {
             return false;
         }
     }
+
 
 }

@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.robotarmh25_remote.DBHandler;
+import com.example.robotarmh25_remote.utilities.DBHandler;
 import com.example.robotarmh25_remote.R;
 import com.example.robotarmh25_remote.ui.authenticate.AuthenticateFragment;
 import com.example.robotarmh25_remote.user.User;

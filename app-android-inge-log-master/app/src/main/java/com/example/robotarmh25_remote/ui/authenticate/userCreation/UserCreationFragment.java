@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.robotarmh25_remote.DBHandler;
+import com.example.robotarmh25_remote.utilities.DBHandler;
 import com.example.robotarmh25_remote.R;
 import com.example.robotarmh25_remote.ui.authenticate.AuthenticateFragment;
 
@@ -56,7 +56,7 @@ public class UserCreationFragment extends Fragment {
                             Toast.makeText(context, "Erreur: nom d'utilisateur déjà pris.", Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
-                        Toast.makeText(context, "Problème rencontré: veuillez re-commencer", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                         Log.e("Base de données", e.getMessage());
                     }
                 } else{
