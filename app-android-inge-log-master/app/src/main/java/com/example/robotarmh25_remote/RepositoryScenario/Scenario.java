@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Scenario {
+
     private ArrayList<TypeTask> tasks = new ArrayList<TypeTask>();
 
     public enum TypeTask {

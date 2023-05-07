@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.example.robotarmh25_remote.RepositoryScenario.Scenario;
 
@@ -21,8 +20,8 @@ public class DBHandler extends SQLiteOpenHelper {
     // below int is our database version
     private static final int DB_VERSION = 1;
 
-    // below variable is for our table name.
-    private static final String TABLE_NAME = "Scenario";
+    // below variable is for our Scenario table name.
+    private static final String SCENARIO_TABLE_NAME = "Scenario";
 
     // below variable is for our id column.
     private static final String ID_COL = "id";
@@ -38,6 +37,15 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String ACTION3_COL = "action3";
     // below variable is for our course name column
     private static final String ACTION4_COL = "action4";
+
+    // below variable is for our User table name
+    private static final String USER_TABLE_NAME = "User";
+
+    // below variable is for our course name column
+    private static final String LOGIN = "Login";
+    // below variable is for our course name column
+    private static final String PASSWORD = "Password";
+
     // creating a constructor for our database handler.
     public DBHandler(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -50,7 +58,7 @@ public class DBHandler extends SQLiteOpenHelper {
         // an sqlite query and we are
         // setting our column names
         // along with their data types.
-        String query = "CREATE TABLE " + TABLE_NAME + " ("
+        String query = "CREATE TABLE " + SCENARIO_TABLE_NAME + " ("
                 + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ACTION1_COL + " TEXT,"
                 + ACTION2_COL + " TEXT,"
@@ -60,6 +68,12 @@ public class DBHandler extends SQLiteOpenHelper {
 
         // at last we are calling a exec sql
         // method to execute above sql query
+        db.execSQL(query);
+
+        query = "CREATE TABLE " + USER_TABLE_NAME + " ("
+                + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + LOGIN + " TEXT  UNIQUE,"
+                + PASSWORD + " TEXT)";
         db.execSQL(query);
     }
 
@@ -87,7 +101,7 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         // after adding all values we are passing
         // content values to our table.
-        db.insert(TABLE_NAME, null, values);
+        db.insert(SCENARIO_TABLE_NAME, null, values);
 
         // at last we are closing our
         // database after adding database.
@@ -97,7 +111,7 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // this method is called to check if the table exists already.
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SCENARIO_TABLE_NAME);
         onCreate(db);
     }
 
@@ -107,7 +121,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         // at last we are calling a exec sql
         // method to execute above sql query
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor res = db.rawQuery("SELECT * FROM " + SCENARIO_TABLE_NAME, null);
         res.moveToFirst();
         while(res.isAfterLast() == false) {
             ArrayList<String> scenario = new ArrayList<String>();
@@ -126,11 +140,70 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public void deleteData() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, null, null);
+        db.delete(SCENARIO_TABLE_NAME, null, null);
     }
 
     public void deleteData(int i) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, ID_COL + "="+i, null);
+        db.delete(SCENARIO_TABLE_NAME, ID_COL + "="+i, null);
     }
+
+    /**
+     * delete the given user of the database
+     * @param username
+     */
+    public void deleteUser(String username) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(USER_TABLE_NAME, LOGIN + "= ?", new String[]{username});
+    }
+
+    /**
+     * create the given user on the database
+     * @param userName
+     * @param pwd
+     */
+    public void createUser(String userName, String pwd) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(LOGIN,userName);
+        values.put(PASSWORD,pwd);
+        db.insert(USER_TABLE_NAME,null, values);
+    }
+
+    /**
+     * get true if the username is available
+     *      false else
+     * @param userName
+     * @return
+     */
+    public boolean getUserName(String userName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery( "SELECT " + LOGIN + " FROM " + USER_TABLE_NAME + " WHERE " +
+                LOGIN +" = ?",new String[]{userName});
+        if ( res.getCount() == 0 ){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * get true if the given password coreesponding of the given user
+     *      alse else
+     * @param userName
+     * @param pwd
+     * @return
+     */
+    public boolean getUserPwd(String userName, String pwd) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery( "SELECT " + PASSWORD + " FROM " + USER_TABLE_NAME + " WHERE " +
+                LOGIN +" = ?",new String[]{userName});
+        res.moveToFirst();
+        if(res.getString(res.getColumnIndex(PASSWORD)).equals(pwd)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

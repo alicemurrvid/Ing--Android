@@ -3,7 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_connect">
+    app:startDestination="@+id/nav_authentication">
+
+    <fragment
+        android:id="@+id/nav_authentication_out"
+        android:name="com.example.robotarmh25_remote.ui.authenticate.AuthenticateFragment"
+        android:label="Utilisateur compte"
+        tools:layout="@layout/authenticate_v2_layout" />
+
+    <fragment
+        android:id="@+id/nav_authentication"
+        android:name="com.example.robotarmh25_remote.ui.authenticate.AuthenticateFragment"
+        android:label="Utilisateur compte"
+        tools:layout="@layout/authenticate_layout" />
 
     <fragment
         android:id="@+id/nav_connect"
@@ -26,4 +38,11 @@
         android:name="com.example.robotarmh25_remote.ui.remote.autonomousFragment"
         android:label="@string/menu_auto"
         tools:layout="@layout/fragment_autonomous" />
+
+
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.example.robotarmh25_remote.ui.authenticate.logIn.LogInFragment"
+        android:label="LogIn"
+        tools:layout="@layout/login_layout" />
 </navigation>

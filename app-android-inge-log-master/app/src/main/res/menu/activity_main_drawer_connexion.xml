@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    android:id="@+id/menu_test">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_authentication"
+            android:icon="@drawable/ic_baseline_perm_identity_24"
+            android:title="Utilisateur" />
+        <item
+            android:id="@+id/nav_connect"
+            android:icon="@drawable/ic_settings_remote"
+            android:title="@string/menu_connect" />
+        <item
+            android:id="@+id/nav_remote"
+            android:icon="@drawable/ic_precision_manufacturing_black_24dp"
+            android:title="@string/menu_remote" />
+        <item
+            android:id="@+id/nav_config"
+            android:icon="@drawable/ic_baseline_create_24"
+            android:title="@string/menu_config" />
+        <item
+            android:id="@+id/nav_auto"
+            android:icon="@drawable/ic_baseline_autorenew_24"
+            android:title="@string/menu_auto" />
+    </group>
+</menu>
