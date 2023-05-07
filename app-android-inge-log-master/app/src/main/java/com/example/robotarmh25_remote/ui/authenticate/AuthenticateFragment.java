@@ -16,6 +16,7 @@ import com.example.robotarmh25_remote.ui.authenticate.logIn.LogInFragment;
 import com.example.robotarmh25_remote.ui.authenticate.userCreation.UserCreationFragment;
 import com.example.robotarmh25_remote.ui.authenticate.userDeleting.UserDeletingFragment;
 import com.example.robotarmh25_remote.user.User;
+import com.example.robotarmh25_remote.utilities.RedirectionService;
 
 /**
  * Fragment to authenticate the user
@@ -24,6 +25,7 @@ public class AuthenticateFragment extends Fragment {
 
     private View fragmentView;
     private Context context;
+    private RedirectionService redirectionService = new RedirectionService();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,7 +42,9 @@ public class AuthenticateFragment extends Fragment {
             // go to the log in menu
             logInButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    redirect(new LogInFragment());
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    redirectionService.redirect(new LogInFragment(),fragmentTransaction);
                 }
             });
 
@@ -48,7 +52,9 @@ public class AuthenticateFragment extends Fragment {
             // go to the userCreation menu
             signInButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    redirect(new UserCreationFragment());
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    redirectionService.redirect(new UserCreationFragment(),fragmentTransaction);
                 }
             });
 
@@ -64,8 +70,11 @@ public class AuthenticateFragment extends Fragment {
             final Button logOutButton = fragmentView.findViewById(R.id.logOutButton);
 
             signOutButton.setOnClickListener(new View.OnClickListener() {
+
                 public void onClick(View v) {
-                    redirect(new UserDeletingFragment());
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    redirectionService.redirect(new UserDeletingFragment(),fragmentTransaction);
                 }
             });
 
@@ -81,15 +90,5 @@ public class AuthenticateFragment extends Fragment {
         }
     }
 
-    /**
-     * fonction to redirect the user to an another fragment
-     * @param frag
-     */
-    public void redirect(Fragment frag) {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.nav_host_fragment, frag);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }
+
 }

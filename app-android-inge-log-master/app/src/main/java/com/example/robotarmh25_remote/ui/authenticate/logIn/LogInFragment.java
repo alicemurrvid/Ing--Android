@@ -18,6 +18,7 @@ import com.example.robotarmh25_remote.utilities.DBHandler;
 import com.example.robotarmh25_remote.R;
 import com.example.robotarmh25_remote.ui.authenticate.AuthenticateFragment;
 import com.example.robotarmh25_remote.user.User;
+import com.example.robotarmh25_remote.utilities.RedirectionService;
 
 /**
  * Fragment maneging to user's log in
@@ -28,6 +29,7 @@ public class LogInFragment extends Fragment {
     private Context context;
     private DBHandler db;
     private User user = User.getInstance();
+    private RedirectionService redirectionService = new RedirectionService();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,21 +76,12 @@ public class LogInFragment extends Fragment {
          */
         backConnexionButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                redirect(new AuthenticateFragment());
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                redirectionService.redirect(new AuthenticateFragment(),fragmentTransaction);
             }
         });
         return this.fragmentView;
     }
 
-    /**
-     * fonction of redirection to a another fragment
-     * @param frag
-     */
-    public void redirect(Fragment frag) {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.nav_host_fragment, frag);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }
 }
