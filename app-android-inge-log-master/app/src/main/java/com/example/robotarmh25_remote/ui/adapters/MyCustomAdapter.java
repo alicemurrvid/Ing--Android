@@ -60,13 +60,23 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 if(autonomousFragment.scenarioToPlay  != null) {
-                    if (!switchbtn.isChecked()){
-                        autonomousFragment.scenarioToPlay  = null;
-                        autonomousFragment.key = 0;
+                    if (Character.compare(list.get(position).charAt(4), ',') != 0) {
+                        if (autonomousFragment.key == Integer.parseInt(list.get(position).substring(3, 5))){
+                            autonomousFragment.scenarioToPlay = null;
+                            autonomousFragment.key = 0;
+                        } else {
+                            Toast.makeText(context, "Vous ne pouvez lancer qu'un scénario à la fois", Toast.LENGTH_SHORT).show();
+                            switchbtn.setChecked(false);
+                        }
                     }
                     else {
-                        Toast.makeText(context, "Vous ne pouvez lancer qu'un scénario à la fois", Toast.LENGTH_SHORT).show();
-                        switchbtn.setChecked(false);
+                        if (autonomousFragment.key == Character.getNumericValue(list.get(position).charAt(3))) {
+                            autonomousFragment.scenarioToPlay = null;
+                            autonomousFragment.key = 0;
+                        } else {
+                            Toast.makeText(context, "Vous ne pouvez lancer qu'un scénario à la fois", Toast.LENGTH_SHORT).show();
+                            switchbtn.setChecked(false);
+                        }
                     }
                 }
                 else {

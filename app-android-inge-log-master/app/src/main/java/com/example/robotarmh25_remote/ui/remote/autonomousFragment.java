@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.robotarmh25_remote.utilities.BluetoothConnection;
 import com.example.robotarmh25_remote.utilities.DBHandler;
@@ -20,6 +22,7 @@ import com.example.robotarmh25_remote.ui.adapters.MyCustomAdapter;
 import com.example.robotarmh25_remote.R;
 import com.example.robotarmh25_remote.RepositoryScenario.Scenario;
 import com.example.robotarmh25_remote.ui.connect.ConnectFragment;
+import com.example.robotarmh25_remote.utilities.RedirectionService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,13 +31,14 @@ import java.util.HashMap;
 
 public class autonomousFragment extends Fragment {
     private BluetoothConnection bluetoothConnection;
+    private RedirectionService redirectionService = new RedirectionService();
     private Context context;
     private View fragmentView;
     private Switch firstScenario, secondScenario;
     private Button addScenarioButton, deleteScenarioButton;
     private TextView tasks1Text, tasks2Text;
     private HashMap<String, ArrayList<String>> scenarios;
-    public static Scenario scenarioToPlay;
+    public static Scenario scenarioToPlay = null;
     private ListView scenarioListView;
     private DBHandler dbHandler;
     private MyCustomAdapter adapter;
@@ -96,7 +100,7 @@ public class autonomousFragment extends Fragment {
         addScenarioButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
-                    for (Scenario.TypeTask task : scenarioToPlay .getTasks()) {
+                    for (Scenario.TypeTask task : scenarioToPlay.getTasks()) {
                         try {
                             bluetoothConnection.writeMessage((byte)task.getTaskValue());
                             int termine = 0;
@@ -107,11 +111,9 @@ public class autonomousFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
-                    scenarioToPlay = null;
                     Toast.makeText(context, "Scénario lancé", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Toast.makeText(context, "Problème rencontré: veuillez re-commencer", Toast.LENGTH_SHORT).show();
-                    Log.e("Base de données", e.getMessage());
                 }
             }
         });
@@ -127,6 +129,9 @@ public class autonomousFragment extends Fragment {
                     }
                     scenarioToPlay = null;
                     adapter.notifyDataSetChanged();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    redirectionService.redirect(new autonomousFragment(),fragmentTransaction);
                 } catch (Exception e) {
                     Toast.makeText(context, "Problème rencontré: veuillez re-commencer", Toast.LENGTH_SHORT).show();
                     Log.e("Base de données", e.getMessage());
@@ -136,7 +141,7 @@ public class autonomousFragment extends Fragment {
         firstScenario.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(scenarioToPlay != null) {
-                    if (!firstScenario.isChecked()){
+                    if (scenarioToPlay == scenarioBase1){
                         scenarioToPlay   = null;
                     }
                     else {
@@ -153,7 +158,7 @@ public class autonomousFragment extends Fragment {
         secondScenario.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(scenarioToPlay != null) {
-                    if (!secondScenario.isChecked()){
+                    if ( scenarioToPlay == scenarioBase2){
                         scenarioToPlay  = null;
                     }
                     else {
