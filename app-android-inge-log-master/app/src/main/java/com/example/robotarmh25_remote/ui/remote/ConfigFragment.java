@@ -20,6 +20,7 @@ import com.example.robotarmh25_remote.utilities.DBHandler;
 import com.example.robotarmh25_remote.R;
 import com.example.robotarmh25_remote.RepositoryScenario.Scenario;
 import com.example.robotarmh25_remote.ui.connect.ConnectFragment;
+import com.example.robotarmh25_remote.utilities.TypeMovement;
 
 import java.util.ArrayList;
 
@@ -86,7 +87,7 @@ public class ConfigFragment extends Fragment {
             public void onClick(View v) {
                 affichage.add("Rotation antihoraire");
                 adapter.notifyDataSetChanged();
-                scenario.addTask(Scenario.TypeTask.LEFT);
+                scenario.addTask(TypeMovement.ANTI_CLOCKWISE_ROTATION);
             }
         });
 
@@ -94,35 +95,35 @@ public class ConfigFragment extends Fragment {
             public void onClick(View v) {
                 affichage.add("Rotation horaire");
                 adapter.notifyDataSetChanged();
-                scenario.addTask(Scenario.TypeTask.RIGHT);
+                scenario.addTask(TypeMovement.CLOCKWISE_ROTATION);
             }
         });
         lower.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 affichage.add("Baisser bras");
                 adapter.notifyDataSetChanged();
-                scenario.addTask(Scenario.TypeTask.LOWER);
+                scenario.addTask(TypeMovement.LOWER);
             }
         });
         lift.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 affichage.add("Lever bras");
                 adapter.notifyDataSetChanged();
-                scenario.addTask(Scenario.TypeTask.LIFT);
+                scenario.addTask(TypeMovement.LIFT);
             }
         });
         open.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 affichage.add("Ouvrir pince");
                 adapter.notifyDataSetChanged();
-                scenario.addTask(Scenario.TypeTask.OPEN);
+                scenario.addTask(TypeMovement.OPEN);
             }
         });
         close.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 affichage.add("Fermer pince");
                 adapter.notifyDataSetChanged();
-                scenario.addTask(Scenario.TypeTask.CLOSE);
+                scenario.addTask(TypeMovement.CLOSE);
             }
         });
 

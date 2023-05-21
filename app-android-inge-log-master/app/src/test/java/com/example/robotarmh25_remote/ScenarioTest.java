@@ -3,6 +3,7 @@ package com.example.robotarmh25_remote;
 import static org.junit.Assert.assertEquals;
 
 import com.example.robotarmh25_remote.RepositoryScenario.Scenario;
+import com.example.robotarmh25_remote.utilities.TypeMovement;
 
 import org.junit.Test;
 
@@ -16,9 +17,9 @@ public class ScenarioTest {
      */
     @Test
     public void testGetTasks() {
-        ArrayList<Scenario.TypeTask> tasks = new ArrayList<>(Arrays.asList(Scenario.TypeTask.LEFT, Scenario.TypeTask.RIGHT));
+        ArrayList<TypeMovement> tasks = new ArrayList<>(Arrays.asList(TypeMovement.ANTI_CLOCKWISE_ROTATION, TypeMovement.CLOCKWISE_ROTATION));
         Scenario scenario = new Scenario(tasks);
-        ArrayList<Scenario.TypeTask> result = scenario.getTasks();
+        ArrayList<TypeMovement> result = scenario.getTasks();
         assertEquals(tasks, result);
     }
 
@@ -28,9 +29,9 @@ public class ScenarioTest {
     @Test
     public void testAddTask() {
         Scenario scenario = new Scenario();
-        scenario.addTask(Scenario.TypeTask.LIFT);
+        scenario.addTask(TypeMovement.LIFT);
         assertEquals(1, scenario.nbTasks());
-        assertEquals(Scenario.TypeTask.LIFT, scenario.getTask(0));
+        assertEquals(TypeMovement.LIFT, scenario.getTask(0));
     }
 
     /**
@@ -40,11 +41,11 @@ public class ScenarioTest {
     @Test
     public void testAddListTask() {
         Scenario scenario = new Scenario();
-        ArrayList<Scenario.TypeTask> tasks = new ArrayList<>(Arrays.asList(Scenario.TypeTask.OPEN, Scenario.TypeTask.CLOSE));
+        ArrayList<TypeMovement> tasks = new ArrayList<>(Arrays.asList(TypeMovement.OPEN, TypeMovement.CLOSE));
         scenario.addListTask(tasks);
         assertEquals(2, scenario.nbTasks());
-        assertEquals(Scenario.TypeTask.OPEN, scenario.getTask(0));
-        assertEquals(Scenario.TypeTask.CLOSE, scenario.getTask(1));
+        assertEquals(TypeMovement.OPEN, scenario.getTask(0));
+        assertEquals(TypeMovement.CLOSE, scenario.getTask(1));
     }
 
     /**
@@ -53,8 +54,8 @@ public class ScenarioTest {
     @Test
     public void testNbTasks() {
         Scenario scenario = new Scenario();
-        scenario.addTask(Scenario.TypeTask.LEFT);
-        scenario.addTask(Scenario.TypeTask.RIGHT);
+        scenario.addTask(TypeMovement.ANTI_CLOCKWISE_ROTATION);
+        scenario.addTask(TypeMovement.CLOCKWISE_ROTATION);
         assertEquals(2, scenario.nbTasks());
     }
 
@@ -63,10 +64,10 @@ public class ScenarioTest {
      */
     @Test
     public void testGetTasksToString() {
-        ArrayList<Scenario.TypeTask> tasks = new ArrayList<>(Arrays.asList(Scenario.TypeTask.LEFT, Scenario.TypeTask.RIGHT));
+        ArrayList<TypeMovement> tasks = new ArrayList<>(Arrays.asList(TypeMovement.ANTI_CLOCKWISE_ROTATION, TypeMovement.CLOCKWISE_ROTATION));
         Scenario scenario = new Scenario(tasks);
         String result = scenario.getTasksToString();
-        assertEquals("Left, Right", result);
+        assertEquals("rotation Antihoraire, rotation Horaire", result);
     }
 
 

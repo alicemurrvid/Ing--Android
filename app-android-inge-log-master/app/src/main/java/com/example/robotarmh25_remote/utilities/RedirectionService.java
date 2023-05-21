@@ -12,6 +12,7 @@ public class RedirectionService {
     /**
      * fonction to redirect the user to an another fragment
      * @param frag
+     * @param fragmentTransaction
      */
     public void redirect(Fragment frag, FragmentTransaction fragmentTransaction) {
         fragmentTransaction.replace(R.id.nav_host_fragment, frag);

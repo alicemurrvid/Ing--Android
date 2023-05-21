@@ -23,6 +23,7 @@ import com.example.robotarmh25_remote.R;
 import com.example.robotarmh25_remote.RepositoryScenario.Scenario;
 import com.example.robotarmh25_remote.ui.connect.ConnectFragment;
 import com.example.robotarmh25_remote.utilities.RedirectionService;
+import com.example.robotarmh25_remote.utilities.TypeMovement;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,11 +75,11 @@ public class autonomousFragment extends Fragment {
         tasks2Text = fragmentView.findViewById(R.id.tasksScenario2);
 
         // Initialize the two basic scenarios
-        ArrayList<Scenario.TypeTask> tasks1 = new ArrayList<>(Arrays.asList(Scenario.TypeTask.LIFT, Scenario.TypeTask.LEFT, Scenario.TypeTask.LOWER, Scenario.TypeTask.OPEN,
-                Scenario.TypeTask.CLOSE, Scenario.TypeTask.LIFT, Scenario.TypeTask.RIGHT, Scenario.TypeTask.LOWER, Scenario.TypeTask.OPEN));
+        ArrayList<TypeMovement> tasks1 = new ArrayList<>(Arrays.asList(TypeMovement.LIFT, TypeMovement.ANTI_CLOCKWISE_ROTATION, TypeMovement.LOWER, TypeMovement.CLOSE,
+                TypeMovement.LIFT, TypeMovement.CLOCKWISE_ROTATION, TypeMovement.LOWER, TypeMovement.OPEN));
         Scenario scenarioBase1 = new Scenario(tasks1);
-        ArrayList<Scenario.TypeTask> tasks2 =  new ArrayList<>(Arrays.asList(Scenario.TypeTask.LIFT, Scenario.TypeTask.RIGHT, Scenario.TypeTask.LOWER, Scenario.TypeTask.OPEN,
-                Scenario.TypeTask.CLOSE, Scenario.TypeTask.LIFT, Scenario.TypeTask.LEFT, Scenario.TypeTask.LOWER, Scenario.TypeTask.OPEN));
+        ArrayList<TypeMovement> tasks2 =  new ArrayList<>(Arrays.asList(TypeMovement.LIFT, TypeMovement.CLOCKWISE_ROTATION, TypeMovement.LOWER, TypeMovement.CLOSE,
+                TypeMovement.LIFT, TypeMovement.ANTI_CLOCKWISE_ROTATION, TypeMovement.LOWER, TypeMovement.OPEN));
         Scenario scenarioBase2 = new Scenario(tasks2);
 
         // Set the text for the two basic scenarios
@@ -100,9 +101,9 @@ public class autonomousFragment extends Fragment {
         addScenarioButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
-                    for (Scenario.TypeTask task : scenarioToPlay.getTasks()) {
+                    for (TypeMovement task : scenarioToPlay.getTasks()) {
                         try {
-                            bluetoothConnection.writeMessage((byte)task.getTaskValue());
+                            bluetoothConnection.writeMessage(task.getTaskValue());
                             int termine = 0;
                             while (termine != 1) {
                                 termine  = bluetoothConnection.readMessage();

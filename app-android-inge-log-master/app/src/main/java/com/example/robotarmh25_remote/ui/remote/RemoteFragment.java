@@ -43,21 +43,6 @@ public class RemoteFragment extends Fragment {
         switchAntiClockwiseRotation .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              /*  if(switchAntiClockwiseRotation .isChecked()) {
-                    try {
-                        bluetoothConnection.writeMessage((byte) TypeMovement.LEFT.getTaskValue());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(context, "Démarrage rotation Antihoraire", Toast.LENGTH_SHORT).show();
-                } else {
-                    try {
-                        bluetoothConnection.writeMessage((byte) 2);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(context, "Arrêt rotation Antihoraire", Toast.LENGTH_SHORT).show();
-                }*/
                 performMovement(TypeMovement.ANTI_CLOCKWISE_ROTATION, switchAntiClockwiseRotation.isChecked());
             }
         });
@@ -65,21 +50,6 @@ public class RemoteFragment extends Fragment {
         switchClockwiseRotation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* if(switchClockwiseRotation.isChecked()) {
-                    try {
-                        bluetoothConnection.writeMessage((byte) 3);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(context, "Démarrage rotation Horaire", Toast.LENGTH_SHORT).show();
-                } else {
-                    try {
-                        bluetoothConnection.writeMessage((byte) 4);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(context, "Arrêt rotation Horaire", Toast.LENGTH_SHORT).show();
-                }*/
                 performMovement(TypeMovement.CLOCKWISE_ROTATION, switchClockwiseRotation.isChecked());
             }
         });
@@ -87,21 +57,6 @@ public class RemoteFragment extends Fragment {
         switchLift .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             /*   if(switchLift .isChecked()) {
-                    try {
-                        bluetoothConnection.writeMessage((byte)5);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(context, "Démarrage lever bras", Toast.LENGTH_SHORT).show();
-                } else {
-                    try {
-                        bluetoothConnection.writeMessage((byte) 6);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(context, "Arrêt lever bras", Toast.LENGTH_SHORT).show();
-                }*/
                 performMovement(TypeMovement.LIFT, switchLift.isChecked());
             }
         });
@@ -109,21 +64,6 @@ public class RemoteFragment extends Fragment {
         switchLower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              /*  if( switchLower.isChecked()) {
-                    try {
-                        bluetoothConnection.writeMessage((byte)7);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(context, "Démarrage baisser bras", Toast.LENGTH_SHORT).show();
-                } else {
-                    try {
-                        bluetoothConnection.writeMessage((byte) 8);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(context, "Arrêt baisser bras", Toast.LENGTH_SHORT).show();
-                }*/
                 performMovement(TypeMovement.LOWER, switchLower.isChecked());
             }
         });
@@ -131,21 +71,6 @@ public class RemoteFragment extends Fragment {
         switchOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* if(switchOpen.isChecked()) {
-                    try {
-                        bluetoothConnection.writeMessage((byte)9);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(context, "Démarrage ouverture pince", Toast.LENGTH_SHORT).show();
-                } else {
-                    try {
-                        bluetoothConnection.writeMessage((byte) 10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(context, "Arrêt ouverture pince", Toast.LENGTH_SHORT).show();
-                }*/
                 performMovement(TypeMovement.OPEN, switchOpen.isChecked());
             }
         });
@@ -153,21 +78,6 @@ public class RemoteFragment extends Fragment {
         switchClose .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*if(switchClose .isChecked()) {
-                    try {
-                        bluetoothConnection.writeMessage((byte)11);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(context, "Démarrage fermeture pince", Toast.LENGTH_SHORT).show();
-                } else {
-                    try {
-                        bluetoothConnection.writeMessage((byte) 12);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(context, "Arrêt fermeture pince", Toast.LENGTH_SHORT).show();
-                }*/
                 performMovement(TypeMovement.CLOSE, switchClose.isChecked());
             }
         });

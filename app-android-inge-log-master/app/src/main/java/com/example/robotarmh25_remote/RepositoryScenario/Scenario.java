@@ -3,66 +3,52 @@ package com.example.robotarmh25_remote.RepositoryScenario;
 import android.util.Log;
 
 
+import com.example.robotarmh25_remote.utilities.TypeMovement;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Scenario {
 
-    private ArrayList<TypeTask> tasks = new ArrayList<TypeTask>();
+    private ArrayList<TypeMovement> tasks = new ArrayList<TypeMovement>();
 
-    public enum TypeTask {
-        LEFT ("Left",1), RIGHT ("Right",3), LIFT ("Lift",5), LOWER ("Lower",7),
-        OPEN ("Open",9), CLOSE ("Close",11);
-        private String stringValue;
-        private int intValue;
-        private TypeTask(String toString, int value) {
-            stringValue = toString;
-            intValue = value;
-        }
-
-        @Override
-        public String toString() {
-            return stringValue;
-        }
-        public int getTaskValue(){return intValue;}
-    }
     public Scenario(){}
 
-    public Scenario(ArrayList<TypeTask> tasks) {
+    public Scenario(ArrayList<TypeMovement> tasks) {
         this.tasks = tasks;
     }
 
     public Scenario(ArrayList<String> stringTasks, int i) {
-        ArrayList<TypeTask> task = new ArrayList<TypeTask>();
+        ArrayList<TypeMovement> task = new ArrayList<TypeMovement>();
         for (String t: stringTasks) {
             if (!t.equals("NULL"))
-                task.add(TypeTask.valueOf(t.toUpperCase()));
+                task.add(TypeMovement.valueOf(t.toUpperCase()));
         }
         this.tasks = task;
     }
 
     public Scenario(String stringTasks) {
-        ArrayList<TypeTask> task = new ArrayList<TypeTask>();
+        ArrayList<TypeMovement> task = new ArrayList<TypeMovement>();
         ArrayList<String> scenario = new ArrayList<String>(Arrays.asList(stringTasks.split(", ")));
         this.tasks = task;
     }
 
-    public ArrayList<TypeTask> getTasks(){return tasks;}
-    public void setTasks(ArrayList<TypeTask> tasks) {
+    public ArrayList<TypeMovement> getTasks(){return tasks;}
+    public void setTasks(ArrayList<TypeMovement> tasks) {
         this.tasks = tasks;
     }
-    public TypeTask getTask(int index) {
+    public TypeMovement getTask(int index) {
         return tasks.get(index);
     }
-    public void addTask(TypeTask task){
+    public void addTask(TypeMovement task){
         try {
             tasks.add(task);
         } catch (Exception e){
             Log.e("Bluetooth", e.getMessage());
         }
     }
-    public void addListTask(List<TypeTask> tasks){
+    public void addListTask(List<TypeMovement> tasks){
         try {
             this.tasks.addAll(tasks);
         } catch (Exception e){
@@ -74,8 +60,8 @@ public class Scenario {
     }
     public String getTasksToString() {
         String result = "";
-        for (TypeTask task : tasks) {
-            result += task.toString()+", ";
+        for (TypeMovement task : tasks) {
+            result += task.getMessage()+", ";
         }
         return result.substring(0, result.length() - 2);
     }
